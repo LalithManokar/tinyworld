@@ -7,11 +7,7 @@ function saveCountry(country) {
 	stmt.execute();
 	conn.commit();
 }
-var country = {
-	name: $.request.parameters.get("name"),
-	partof: $.request.parameters.get("continent")
-}; 
-// validate the inputs here! 
-saveCountry(country); 
-$.response.contentType = "application/json";
-$.response.setBody(JSON.stringify(country));
+var body = $.request.body.asString();
+var country = JSON.parse(body);
+saveCountry(country);
+$.response.status = $.net.http.CREATED;
